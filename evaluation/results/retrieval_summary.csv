@@ -1,0 +1,5 @@
+method,questions,recall_at_5,hit_at_5,mrr_at_5,p50_latency_ms,p95_latency_ms
+dense,3,1.0,1.0,0.6111,7.81,536.41
+bm25,3,1.0,1.0,1.0,81.71,83.55
+hybrid,3,1.0,1.0,0.6667,89.73,92.73
+reranked,3,1.0,1.0,0.5667,224.0,240.84

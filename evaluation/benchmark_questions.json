@@ -1,0 +1,36 @@
+
+[
+  {
+    "id": "apple_rd_2024",
+    "question": "Why did Apple's R&D expenses increase in 2024 compared with 2023?",
+    "relevant_evidence": [
+      {
+        "document": "apple10k2024.pdf",
+        "page": 27,
+        "contains": "headcount-related expenses"
+      }
+    ]
+  },
+  {
+    "id": "apple_rd_2025",
+    "question": "What drove Apple's R&D expense growth in 2025 compared with 2024?",
+    "relevant_evidence": [
+      {
+        "document": "apple10k2025.pdf",
+        "page": 27,
+        "contains": "infrastructure-related costs"
+      }
+    ]
+  },
+  {
+    "id": "apple_operating_expenses",
+    "question": "What were Apple's total operating expenses in 2025?",
+    "relevant_evidence": [
+      {
+        "document": "apple10k2025.pdf",
+        "page": 27,
+        "contains": "Total operating expenses"
+      }
+    ]
+  }
+]
