@@ -2,6 +2,9 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from app.ingestion.parser import parse_pdf
 from app.ingestion.chunker import chunk_pages
+from pydantic import BaseModel
+from app.ingestion.chunker import chunk_pages
+from app.database.vector_store import store_chunks, search_chunks
 
 import tempfile
 import os
@@ -35,12 +38,13 @@ async def upload_document(file: UploadFile = File(...)):
 
         pages = parse_pdf(temp_path)
         chunks = chunk_pages(pages)
+        stored_count = store_chunks(chunks)
 
         return {
             "filename": file.filename,
             "total_pages_with_text": len(pages),
             "total_chunks": len(chunks),
-            "chunks": chunks
+            "stored_chunks": stored_count
         }
 
     except Exception as exc:
@@ -52,3 +56,20 @@ async def upload_document(file: UploadFile = File(...)):
     finally:
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)
+
+class SearchRequest(BaseModel):
+    query: str
+    limit: int = 5
+
+
+@app.post("/search")
+def search_documents(request: SearchRequest):
+    results = search_chunks(
+        query=request.query,
+        limit=request.limit
+    )
+
+    return {
+        "query": request.query,
+        "results": results
+    }
