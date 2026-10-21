@@ -1,0 +1,31 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# PyCharm
+.idea/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local data and uploaded documents
+data/
+uploads/
+*.pdf
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
