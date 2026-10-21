@@ -9,6 +9,7 @@ from app.retrieval.hybrid_search import (
     hybrid_search,
     reranked_hybrid_search
 )
+from app.tools.sec_comparison import compare_sec_financials
 from app.generation.answer import generate_answer
 import tempfile
 import os
@@ -229,4 +230,28 @@ def agent_ask(request: AskRequest):
     )
 
     return result
+
+class FinancialCompareRequest(BaseModel):
+    cik: str
+    metric: str
+    start_year: int
+    end_year: int
+
+
+@app.post("/financial/compare")
+def financial_compare(request: FinancialCompareRequest):
+
+    try:
+        return compare_sec_financials(
+            cik=request.cik,
+            metric=request.metric,
+            start_year=request.start_year,
+            end_year=request.end_year
+        )
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc)
+        ) from exc
 
