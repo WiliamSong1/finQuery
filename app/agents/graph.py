@@ -1,4 +1,4 @@
-
+from app.tools.financial_analysis import analyze_operating_expenses
 from functools import lru_cache
 from typing import TypedDict
 import re
@@ -282,71 +282,26 @@ def run_agent(query: str, limit: int = 5) -> dict:
         **final_state["result"]
     }
 
+
 def financial_node(state: AgentState) -> dict:
-    print("[LangGraph] Running SEC financial comparison")
+    print("[LangGraph] Running financial analysis")
 
     years = state["plan"]["required_years"]
+
+    if len(years) < 2:
+        raise ValueError(
+            "Financial comparison requires at least two years"
+        )
 
     start_year = min(years)
     end_year = max(years)
 
-    comparison = compare_sec_financials(
-        cik="0000320193",
-        metric="operating_expenses",
+    result = analyze_operating_expenses(
         start_year=start_year,
         end_year=end_year
     )
 
-    million = Decimal("1000000")
-
-    start_value = Decimal(comparison["start_value"])
-    end_value = Decimal(comparison["end_value"])
-    change = Decimal(comparison["absolute_change"])
-
-    start_millions = start_value / million
-    end_millions = end_value / million
-    change_millions = change / million
-
-    percentage = comparison["percentage_change"]
-
-    if change > 0:
-        direction = "increased"
-    elif change < 0:
-        direction = "decreased"
-    else:
-        direction = "remained unchanged"
-
-    answer = (
-        f"Apple's operating expenses {direction} "
-        f"from ${start_millions:,.0f} million "
-        f"in {start_year} [1] "
-        f"to ${end_millions:,.0f} million "
-        f"in {end_year} [2]. "
-        f"The absolute change was "
-        f"${abs(change_millions):,.0f} million."
-    )
-
-    if percentage is not None:
-        answer += (
-            f" This represents a "
-            f"{abs(Decimal(percentage)):.2f}% "
-            f"{'increase' if change > 0 else 'decrease' if change < 0 else 'change'}."
-        )
-
     return {
-        "result": {
-            "answer": answer,
-            "status": "answered",
-            "calculation": comparison,
-            "sources": [
-                {
-                    "citation_id": str(i),
-                    **source
-                }
-                for i, source in enumerate(
-                    comparison["sources"], start=1
-                )
-            ],
-            "answer_type": "deterministic_financial_comparison"
-        }
+        "result": result
     }
+
