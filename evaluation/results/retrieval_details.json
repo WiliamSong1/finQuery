@@ -3,7 +3,7 @@
     "method": "dense",
     "question_id": "apple_rd_2024",
     "question": "Why did Apple's R&D expenses increase in 2024 compared with 2023?",
-    "latency_ms": 7.81,
+    "latency_ms": 8.99,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 1.0,
@@ -39,7 +39,7 @@
     "method": "dense",
     "question_id": "apple_rd_2025",
     "question": "What drove Apple's R&D expense growth in 2025 compared with 2024?",
-    "latency_ms": 6.61,
+    "latency_ms": 8.28,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 0.3333333333333333,
@@ -75,7 +75,7 @@
     "method": "dense",
     "question_id": "apple_operating_expenses",
     "question": "What were Apple's total operating expenses in 2025?",
-    "latency_ms": 536.41,
+    "latency_ms": 31.78,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 0.5,
@@ -111,7 +111,7 @@
     "method": "bm25",
     "question_id": "apple_rd_2024",
     "question": "Why did Apple's R&D expenses increase in 2024 compared with 2023?",
-    "latency_ms": 81.6,
+    "latency_ms": 84.96,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 1.0,
@@ -147,7 +147,7 @@
     "method": "bm25",
     "question_id": "apple_rd_2025",
     "question": "What drove Apple's R&D expense growth in 2025 compared with 2024?",
-    "latency_ms": 83.55,
+    "latency_ms": 81.66,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 1.0,
@@ -183,7 +183,7 @@
     "method": "bm25",
     "question_id": "apple_operating_expenses",
     "question": "What were Apple's total operating expenses in 2025?",
-    "latency_ms": 81.71,
+    "latency_ms": 82.26,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 1.0,
@@ -219,7 +219,7 @@
     "method": "hybrid",
     "question_id": "apple_rd_2024",
     "question": "Why did Apple's R&D expenses increase in 2024 compared with 2023?",
-    "latency_ms": 89.52,
+    "latency_ms": 88.71,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 1.0,
@@ -291,7 +291,7 @@
     "method": "hybrid",
     "question_id": "apple_operating_expenses",
     "question": "What were Apple's total operating expenses in 2025?",
-    "latency_ms": 92.73,
+    "latency_ms": 92.83,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 0.5,
@@ -327,7 +327,7 @@
     "method": "reranked",
     "question_id": "apple_rd_2024",
     "question": "Why did Apple's R&D expenses increase in 2024 compared with 2023?",
-    "latency_ms": 204.29,
+    "latency_ms": 239.61,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 1.0,
@@ -363,7 +363,7 @@
     "method": "reranked",
     "question_id": "apple_rd_2025",
     "question": "What drove Apple's R&D expense growth in 2025 compared with 2024?",
-    "latency_ms": 240.84,
+    "latency_ms": 225.0,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 0.5,
@@ -399,7 +399,7 @@
     "method": "reranked",
     "question_id": "apple_operating_expenses",
     "question": "What were Apple's total operating expenses in 2025?",
-    "latency_ms": 224.0,
+    "latency_ms": 230.62,
     "recall_at_5": 1.0,
     "hit_at_5": 1.0,
     "mrr_at_5": 0.2,
@@ -428,6 +428,114 @@
         "chunk_id": "de3c114b30d92d9bfa18d1464b88e265a0589e7627cb67ff72da4ffb0991f9ff",
         "document": "apple10k2025.pdf",
         "page": 27
+      }
+    ]
+  },
+  {
+    "method": "year_aware_reranked",
+    "question_id": "apple_rd_2024",
+    "question": "Why did Apple's R&D expenses increase in 2024 compared with 2023?",
+    "latency_ms": 201.66,
+    "recall_at_5": 1.0,
+    "hit_at_5": 1.0,
+    "mrr_at_5": 1.0,
+    "retrieved_chunks": [
+      {
+        "chunk_id": "90833af1c6902f754c3816cc2b43303effbe8f7d490cf8a6421d5c5c38a9e6da",
+        "document": "apple10k2024.pdf",
+        "page": 27
+      },
+      {
+        "chunk_id": "de3c114b30d92d9bfa18d1464b88e265a0589e7627cb67ff72da4ffb0991f9ff",
+        "document": "apple10k2025.pdf",
+        "page": 27
+      },
+      {
+        "chunk_id": "de51c87bb3182c1114e3ad008eb64a014606bb2d440bcbd983a07565b5951318",
+        "document": "apple10k2025.pdf",
+        "page": 27
+      },
+      {
+        "chunk_id": "2a24d7622c7d2392a5e09b7d0e412d27dd337337482587516ba47fa122796ad1",
+        "document": "apple10k2023.pdf",
+        "page": 26
+      },
+      {
+        "chunk_id": "2b24a26a7f00f7526f92671027adf76d478e6db9746dd77785ac87be2d0f12af",
+        "document": "apple10k2024.pdf",
+        "page": 26
+      }
+    ]
+  },
+  {
+    "method": "year_aware_reranked",
+    "question_id": "apple_rd_2025",
+    "question": "What drove Apple's R&D expense growth in 2025 compared with 2024?",
+    "latency_ms": 200.85,
+    "recall_at_5": 1.0,
+    "hit_at_5": 1.0,
+    "mrr_at_5": 0.5,
+    "retrieved_chunks": [
+      {
+        "chunk_id": "90833af1c6902f754c3816cc2b43303effbe8f7d490cf8a6421d5c5c38a9e6da",
+        "document": "apple10k2024.pdf",
+        "page": 27
+      },
+      {
+        "chunk_id": "de3c114b30d92d9bfa18d1464b88e265a0589e7627cb67ff72da4ffb0991f9ff",
+        "document": "apple10k2025.pdf",
+        "page": 27
+      },
+      {
+        "chunk_id": "2a24d7622c7d2392a5e09b7d0e412d27dd337337482587516ba47fa122796ad1",
+        "document": "apple10k2023.pdf",
+        "page": 26
+      },
+      {
+        "chunk_id": "de51c87bb3182c1114e3ad008eb64a014606bb2d440bcbd983a07565b5951318",
+        "document": "apple10k2025.pdf",
+        "page": 27
+      },
+      {
+        "chunk_id": "aae8d54e237a57c73a00dd191d434f4f973f7933f60602a345ee5cbbc7cbc71b",
+        "document": "apple10k2025.pdf",
+        "page": 26
+      }
+    ]
+  },
+  {
+    "method": "year_aware_reranked",
+    "question_id": "apple_operating_expenses",
+    "question": "What were Apple's total operating expenses in 2025?",
+    "latency_ms": 248.79,
+    "recall_at_5": 1.0,
+    "hit_at_5": 1.0,
+    "mrr_at_5": 0.5,
+    "retrieved_chunks": [
+      {
+        "chunk_id": "0592102700bc9cd765a9567b52adc03ddf77634ae5055ccc8989c8a422cbdc74",
+        "document": "apple10k2025.pdf",
+        "page": 32
+      },
+      {
+        "chunk_id": "de3c114b30d92d9bfa18d1464b88e265a0589e7627cb67ff72da4ffb0991f9ff",
+        "document": "apple10k2025.pdf",
+        "page": 27
+      },
+      {
+        "chunk_id": "5eb1b6a6bbb0f0c4ecb72ae715b8cffce07d800eb7f1a4d8c4c20dadeb767234",
+        "document": "apple10k2025.pdf",
+        "page": 42
+      },
+      {
+        "chunk_id": "69fa2c9699400704d8863572f3daaf0d5b56cfda5e6a3a44b386db058ead5180",
+        "document": "apple10k2025.pdf",
+        "page": 48
+      },
+      {
+        "chunk_id": "66c2eb248f83ae1ce48af82d76ec9cd1fffd92cb443382900ae7f4e663b69336",
+        "document": "apple10k2025.pdf",
+        "page": 36
       }
     ]
   }

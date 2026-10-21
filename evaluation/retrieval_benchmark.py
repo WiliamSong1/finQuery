@@ -13,6 +13,8 @@ from app.retrieval.hybrid_search import (
     hybrid_search,
     reranked_hybrid_search
 )
+from app.retrieval.scoped_search import search_filing_year
+from app.agents.planner import extract_years
 
 
 ROOT = Path(__file__).resolve().parent
@@ -21,12 +23,34 @@ RESULTS_DIR = ROOT / "results"
 
 TOP_K = 5
 
+def year_aware_reranked_search(
+    query: str,
+    limit: int = 5
+) -> list[dict]:
+
+    years = extract_years(query)
+
+    # Use standard reranking when the question
+    # doesn't specify exactly one fiscal year.
+    if len(years) != 1:
+        return reranked_hybrid_search(
+            query=query,
+            limit=limit
+        )
+
+    return search_filing_year(
+        query=query,
+        year=years[0],
+        limit=limit
+    )
+
 
 SEARCH_METHODS = {
     "dense": search_chunks,
     "bm25": bm25_search,
     "hybrid": hybrid_search,
-    "reranked": reranked_hybrid_search
+    "reranked": reranked_hybrid_search,
+    "year_aware_reranked": year_aware_reranked_search
 }
 
 
@@ -129,7 +153,21 @@ def run_benchmark():
                 results,
                 question["relevant_evidence"]
             )
+            print("\nTop retrieved passages:")
 
+            for rank, result in enumerate(results[:5], start=1):
+                relevant = any(
+                    matches_evidence(result, evidence)
+                    for evidence in question["relevant_evidence"]
+                )
+
+                print(
+                    f"Rank {rank} | "
+                    f"Relevant: {relevant} | "
+                    f"Document: {result.get('document')} | "
+                    f"Page: {result.get('page')} | "
+                    f"Score: {result.get('rerank_score', result.get('score'))}"
+                )
             record = {
                 "method": method_name,
                 "question_id": question["id"],
