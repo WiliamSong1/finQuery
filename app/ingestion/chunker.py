@@ -17,6 +17,7 @@ def chunk_pages(
     for page in pages:
         text = page["text"]
         document = page["document"]
+        document_id = page["document_id"]
         page_number = page["page"]
 
         for start in range(0, len(text), step):
@@ -25,12 +26,18 @@ def chunk_pages(
             if not content.strip():
                 continue
 
+            unique_key = (
+                f"{document_id}:{page_number}:"
+                f"{start}:{content}"
+            )
+
             chunk_id = hashlib.sha256(
-                f"{document}:{page_number}:{start}:{content}".encode()
-            ).hexdigest()[:16]
+                unique_key.encode("utf-8")
+            ).hexdigest()
 
             chunks.append({
                 "chunk_id": chunk_id,
+                "document_id": document_id,
                 "document": document,
                 "page": page_number,
                 "start_offset": start,

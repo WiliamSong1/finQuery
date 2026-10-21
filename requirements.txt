@@ -1,15 +1,8 @@
-
-# FastAPI Backend
 fastapi
 uvicorn[standard]
 python-multipart
 pydantic
-
-# PDF Processing
 pymupdf
-
-# Embeddings
 sentence-transformers
-
-# Vector Database
 qdrant-client
+rank-bm25

@@ -43,7 +43,10 @@ def store_chunks(chunks: list[dict]) -> int:
 
     for chunk, vector in zip(chunks, embeddings):
         point_id = str(
-            uuid.uuid5(uuid.NAMESPACE_URL, chunk["chunk_id"])
+            uuid.uuid5(
+                uuid.NAMESPACE_URL,
+                chunk["chunk_id"]
+            )
         )
 
         points.append(
@@ -52,14 +55,15 @@ def store_chunks(chunks: list[dict]) -> int:
                 vector=vector,
                 payload={
                     "chunk_id": chunk["chunk_id"],
+                    "document_id": chunk["document_id"],
                     "document": chunk["document"],
                     "page": chunk["page"],
+                    "start_offset": chunk["start_offset"],
                     "text": chunk["text"]
                 }
             )
         )
 
-    # Upload in manageable batches
     for start in range(0, len(points), 100):
         client.upsert(
             collection_name=COLLECTION_NAME,
@@ -73,6 +77,9 @@ def store_chunks(chunks: list[dict]) -> int:
 def search_chunks(query: str, limit: int = 5) -> list[dict]:
     ensure_collection()
     client = get_client()
+
+    if not query.strip() or limit <= 0:
+        return []
 
     query_vector = embed_texts([query])[0]
 
