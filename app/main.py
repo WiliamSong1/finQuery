@@ -9,6 +9,7 @@ from app.retrieval.hybrid_search import (
     hybrid_search,
     reranked_hybrid_search
 )
+from app.generation.answer import generate_answer
 import tempfile
 import os
 import hashlib
@@ -169,4 +170,41 @@ def database_stats():
     }
 
 
+
+class AskRequest(BaseModel):
+    query: str
+    limit: int = 5
+
+
+@app.post("/ask")
+def ask_question(request: AskRequest):
+
+    if not request.query.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Question cannot be empty"
+        )
+
+    if not 1 <= request.limit <= 10:
+        raise HTTPException(
+            status_code=400,
+            detail="Limit must be between 1 and 10"
+        )
+
+    try:
+        result = generate_answer(
+            query=request.query,
+            limit=request.limit
+        )
+
+        return {
+            "query": request.query,
+            **result
+        }
+
+    except RuntimeError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=str(exc)
+        ) from exc
 
