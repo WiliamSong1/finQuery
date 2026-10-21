@@ -14,7 +14,7 @@ import tempfile
 import os
 import hashlib
 from pathlib import Path
-
+from app.agents.graph import run_agent
 app = FastAPI(title="Financial RAG API")
 
 
@@ -207,4 +207,26 @@ def ask_question(request: AskRequest):
             status_code=503,
             detail=str(exc)
         ) from exc
+
+@app.post("/agent/ask")
+def agent_ask(request: AskRequest):
+
+    if not request.query.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Question cannot be empty"
+        )
+
+    if not 1 <= request.limit <= 10:
+        raise HTTPException(
+            status_code=400,
+            detail="Limit must be between 1 and 10"
+        )
+
+    result = run_agent(
+        query=request.query,
+        limit=request.limit
+    )
+
+    return result
 

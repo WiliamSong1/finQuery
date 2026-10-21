@@ -5,7 +5,7 @@ from functools import lru_cache
 from app.generation.verifier import verify_answer
 from dotenv import load_dotenv
 from openai import OpenAI
-
+from typing import Optional
 from app.retrieval.hybrid_search import reranked_hybrid_search
 
 
@@ -98,7 +98,11 @@ def build_context(chunks: list[dict]) -> tuple[str, list[dict]]:
     return "\n\n---\n\n".join(sections), sources
 
 
-def generate_answer(query: str, limit: int = 5) -> dict:
+def generate_answer(
+    query: str,
+    limit: int = 5,
+    chunks: Optional[list[dict]] = None
+) -> dict:
     if not query.strip():
         raise ValueError("Question cannot be empty")
 
@@ -106,11 +110,12 @@ def generate_answer(query: str, limit: int = 5) -> dict:
         raise ValueError("Limit must be between 1 and 10")
 
     # Step 1: Retrieve and rerank passages
-    chunks = reranked_hybrid_search(
-        query=query,
-        limit=limit,
-        candidate_limit=max(20, limit * 4)
-    )
+    if chunks is None:
+        chunks = reranked_hybrid_search(
+            query=query,
+            limit=limit,
+            candidate_limit=max(20, limit * 4)
+        )
 
     if not chunks:
         return {
