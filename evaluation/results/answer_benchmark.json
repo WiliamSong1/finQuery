@@ -1,0 +1,166 @@
+{
+  "timestamp": "2026-10-22T01:28:24.689276+00:00",
+  "generator_model": "openai/gpt-oss-20b",
+  "judge_model": "openai/gpt-oss-20b",
+  "summary": {
+    "total_questions": 3,
+    "accepted_answers": 2,
+    "answer_rate": 0.6667,
+    "faithfulness_scored": 2,
+    "mean_faithfulness": 1.0,
+    "evaluation_errors": 0
+  },
+  "results": [
+    {
+      "id": "rd_growth_2024",
+      "question": "Why did Apple's research and development expenses increase in 2024 compared with 2023?",
+      "status": "answered",
+      "faithfulness": 1.0,
+      "answer": "Apple\u2019s R&D expense rose in 2024 compared with 2023 mainly because of higher headcount\u2011related costs.\u00a0[4]",
+      "sources": [
+        {
+          "citation_id": "4",
+          "document_id": "ec74758cd767465362c641cf2fd5d8fedd477aed2bf7f62117e67610435dcb88",
+          "chunk_id": "3bde9b56180a48b17f89ae2a488e5c536ac151853a71f7b66920a917c6888426",
+          "document": "apple10k2024.pdf",
+          "page": 27
+        }
+      ],
+      "internal_verification": {
+        "verified": true,
+        "claims": [
+          {
+            "claim": "Apple\u2019s R&D expense rose in 2024 compared with 2023 mainly because of higher headcount\u2011related costs.",
+            "supported": true,
+            "source_id": 1,
+            "evidence_quote": "The growth in R&D expense during 2024 compared to 2023 was driven primarily by increases in headcount-related expenses."
+          }
+        ],
+        "reason": "All identified claims have supporting evidence"
+      },
+      "retrieved_contexts": [
+        "1,345\u00a0\nPercentage of total net sales\n15\u00a0%\n14\u00a0%\n13\u00a0%\nResearch and Development\nThe growth in R&D expense during 2024 compared to 2023 was driven primarily by increases in headcount-related expenses.\nSelling, General and Administrative\nSelling, general and administrative expense increased $1.2 billion during 2024 compared to 2023.\nApple Inc. | 2024 Form 10-K | 24",
+        "\nSelling, general and administrative\n$\n27,601\u00a0\n6\u00a0%\n$\n26,097\u00a0\n5\u00a0%\n$\n24,932\u00a0\nPercentage of total net sales\n7%\n7%\n7%\nTotal operating expenses\n$\n62,151\u00a0\n8\u00a0%\n$\n57,467\u00a0\n5\u00a0%\n$\n54,847\u00a0\nPercentage of total net sales\n15%\n15%\n14%\nResearch and Development\nThe growth in R&D expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and infrastructure-related costs.\nSelling, General and Administrative\nThe growth in selling, general and administrative expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and\nvariable selling expenses.\nApple Inc. | 2025 Form 10-K | 24",
+        "ility and downward pressure.\nOperating Expenses\nOperating expenses for 2023, 2022 and 2021 were as follows (dollars in millions):\n2023\nChange\n2022\nChange\n2021\nResearch and development\n$\n29,915\u00a0\n14\u00a0%\n$\n26,251\u00a0\n20\u00a0%\n$\n21,914\u00a0\nPercentage of total net sales\n8\u00a0%\n7\u00a0%\n6\u00a0%\nSelling, general and administrative\n$\n24,932\u00a0\n(1)%\n$\n25,094\u00a0\n14\u00a0%\n$\n21,973\u00a0\nPercentage of total net sales\n7\u00a0%\n6\u00a0%\n6\u00a0%\nTotal operating expenses\n$\n54,847\u00a0\n7\u00a0%\n$\n51,345\u00a0\n17\u00a0%\n$\n43,887\u00a0\nPercentage of total net sales\n14\u00a0%\n13\u00a0%\n12\u00a0%\nResearch and Development\nThe year-over-year growth in R&D expense in 2023 was driven primarily by increases in headcount-related expenses.\nSelling, General and Administrative\nSelling, general and administrative expense was relatively flat in 2023 compared to 2022.\nApple Inc. | 2023 Form 10-K | 23",
+        " net sales.\nServices gross margin percentage increased during 2024 compared to 2023 due to a different Services mix.\nThe Company\u2019s future gross margins can be impacted by a variety of factors, as discussed in Part I, Item 1A of this Form 10-K under the heading \u201cRisk Factors.\u201d\nAs a result, the Company believes, in general, gross margins will be subject to volatility and downward pressure.\nOperating Expenses\nOperating expenses for 2024, 2023 and 2022 were as follows (dollars in millions):\n2024\nChange\n2023\nChange\n2022\nResearch and development\n$\n31,370\u00a0\n5\u00a0%\n$\n29,915\u00a0\n14\u00a0%\n$\n26,251\u00a0\nPercentage of total net sales\n8\u00a0%\n8\u00a0%\n7\u00a0%\nSelling, general and administrative\n$\n26,097\u00a0\n5\u00a0%\n$\n24,932\u00a0\n(1)%\n$\n25,094\u00a0\nPercentage of total net sales\n7\u00a0%\n7\u00a0%\n6\u00a0%\nTotal operating expenses\n$\n57,467\u00a0\n5\u00a0%\n$\n54,847\u00a0\n7\u00a0%\n$\n51,345\u00a0\nPercentage of total net sales\n15\u00a0%\n14\u00a0%\n13\u00a0%\nResearch and Development\nThe growth in R&D expense during 2024 compared to 2023 was driven primarily by increases in headcount-related expenses.\nSel",
+        "pared to 2023 due primarily to lower net sales of iPad Pro and the entry-level iPad models, partially offset by higher\nnet sales of iPad Air.\nWearables, Home and Accessories\nWearables, Home and Accessories net sales decreased during 2024 compared to 2023 due primarily to lower net sales of Wearables and Accessories.\nServices\nServices net sales increased during 2024 compared to 2023 due primarily to higher net sales from advertising, the App Store  and cloud services.\n(1)\n\u00ae\nApple Inc. | 2024 Form 10-K | 23"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "90833af1c6902f754c3816cc2b43303effbe8f7d490cf8a6421d5c5c38a9e6da",
+          "document": "apple10k2024.pdf",
+          "page": 27,
+          "rerank_score": 7.99907112121582
+        },
+        {
+          "chunk_id": "de3c114b30d92d9bfa18d1464b88e265a0589e7627cb67ff72da4ffb0991f9ff",
+          "document": "apple10k2025.pdf",
+          "page": 27,
+          "rerank_score": 6.544302940368652
+        },
+        {
+          "chunk_id": "2a24d7622c7d2392a5e09b7d0e412d27dd337337482587516ba47fa122796ad1",
+          "document": "apple10k2023.pdf",
+          "page": 26,
+          "rerank_score": 6.064543724060059
+        },
+        {
+          "chunk_id": "3bde9b56180a48b17f89ae2a488e5c536ac151853a71f7b66920a917c6888426",
+          "document": "apple10k2024.pdf",
+          "page": 27,
+          "rerank_score": 5.235393047332764
+        },
+        {
+          "chunk_id": "2b24a26a7f00f7526f92671027adf76d478e6db9746dd77785ac87be2d0f12af",
+          "document": "apple10k2024.pdf",
+          "page": 26,
+          "rerank_score": 4.159443378448486
+        }
+      ],
+      "retrieval_latency_ms": 2434.27,
+      "generation_latency_ms": 1546.05,
+      "evaluation_status": "scored",
+      "evaluation_latency_ms": 14022.3
+    },
+    {
+      "id": "rd_growth_2025",
+      "question": "Why did Apple's research and development expenses increase in 2025 compared with 2024?",
+      "status": "answered",
+      "faithfulness": 1.0,
+      "answer": "Apple\u2019s R&D expense rose in 2025 versus 2024 mainly because of higher headcount\u2011related expenses and infrastructure\u2011related costs. [2]",
+      "sources": [
+        {
+          "citation_id": "2",
+          "document_id": "108590052c3ba5400c63660d787fe7ed4e43868292946d7a7facebe9ab7d1aab",
+          "chunk_id": "de3c114b30d92d9bfa18d1464b88e265a0589e7627cb67ff72da4ffb0991f9ff",
+          "document": "apple10k2025.pdf",
+          "page": 27
+        }
+      ],
+      "internal_verification": {
+        "verified": true,
+        "claims": [
+          {
+            "claim": "Apple\u2019s R&D expense rose in 2025 versus 2024 mainly because of higher headcount\u2011related expenses and infrastructure\u2011related costs.",
+            "supported": true,
+            "source_id": 2,
+            "evidence_quote": "The growth in R&D expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and infrastructure-related costs."
+          }
+        ],
+        "reason": "All identified claims have supporting evidence"
+      },
+      "retrieved_contexts": [
+        "1,345\u00a0\nPercentage of total net sales\n15\u00a0%\n14\u00a0%\n13\u00a0%\nResearch and Development\nThe growth in R&D expense during 2024 compared to 2023 was driven primarily by increases in headcount-related expenses.\nSelling, General and Administrative\nSelling, general and administrative expense increased $1.2 billion during 2024 compared to 2023.\nApple Inc. | 2024 Form 10-K | 24",
+        "\nSelling, general and administrative\n$\n27,601\u00a0\n6\u00a0%\n$\n26,097\u00a0\n5\u00a0%\n$\n24,932\u00a0\nPercentage of total net sales\n7%\n7%\n7%\nTotal operating expenses\n$\n62,151\u00a0\n8\u00a0%\n$\n57,467\u00a0\n5\u00a0%\n$\n54,847\u00a0\nPercentage of total net sales\n15%\n15%\n14%\nResearch and Development\nThe growth in R&D expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and infrastructure-related costs.\nSelling, General and Administrative\nThe growth in selling, general and administrative expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and\nvariable selling expenses.\nApple Inc. | 2025 Form 10-K | 24",
+        "rgin\nServices gross margin increased during 2025 compared to 2024 primarily due to higher Services net sales and a different mix of services.\nServices gross margin percentage increased during 2025 compared to 2024 primarily due to a different mix of services, partially offset by higher costs.\nThe Company\u2019s future gross margins can be impacted by a variety of factors, as discussed in Part I, Item 1A of this Form 10-K under the heading \u201cRisk Factors.\u201d\nAs a result, the Company believes, in general, gross margins will be subject to volatility and downward pressure.\nOperating Expenses\nOperating expenses for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025\nChange\n2024\nChange\n2023\nResearch and development\n$\n34,550\u00a0\n10\u00a0%\n$\n31,370\u00a0\n5\u00a0%\n$\n29,915\u00a0\nPercentage of total net sales\n8%\n8%\n8%\nSelling, general and administrative\n$\n27,601\u00a0\n6\u00a0%\n$\n26,097\u00a0\n5\u00a0%\n$\n24,932\u00a0\nPercentage of total net sales\n7%\n7%\n7%\nTotal operating expenses\n$\n62,151\u00a0\n8\u00a0%\n$\n57,467\u00a0\n5\u00a0%\n$\n54,847\u00a0\nPercentage of total net",
+        "ility and downward pressure.\nOperating Expenses\nOperating expenses for 2023, 2022 and 2021 were as follows (dollars in millions):\n2023\nChange\n2022\nChange\n2021\nResearch and development\n$\n29,915\u00a0\n14\u00a0%\n$\n26,251\u00a0\n20\u00a0%\n$\n21,914\u00a0\nPercentage of total net sales\n8\u00a0%\n7\u00a0%\n6\u00a0%\nSelling, general and administrative\n$\n24,932\u00a0\n(1)%\n$\n25,094\u00a0\n14\u00a0%\n$\n21,973\u00a0\nPercentage of total net sales\n7\u00a0%\n6\u00a0%\n6\u00a0%\nTotal operating expenses\n$\n54,847\u00a0\n7\u00a0%\n$\n51,345\u00a0\n17\u00a0%\n$\n43,887\u00a0\nPercentage of total net sales\n14\u00a0%\n13\u00a0%\n12\u00a0%\nResearch and Development\nThe year-over-year growth in R&D expense in 2023 was driven primarily by increases in headcount-related expenses.\nSelling, General and Administrative\nSelling, general and administrative expense was relatively flat in 2023 compared to 2022.\nApple Inc. | 2023 Form 10-K | 23",
+        "ad net sales increased during 2025 compared to 2024 primarily due to higher net sales of iPad Air, iPad mini and iPad, partially offset by lower net sales of\niPad Pro.\nWearables, Home and Accessories\nWearables, Home and Accessories net sales decreased during 2025 compared to 2024 primarily due to lower net sales of Accessories and Wearables.\nServices\nServices net sales increased during 2025 compared to 2024 primarily due to higher net sales from advertising, the App Store and cloud services.\n(1)\nApple Inc. | 2025 Form 10-K | 23"
+      ],
+      "retrieved_chunks": [
+        {
+          "chunk_id": "90833af1c6902f754c3816cc2b43303effbe8f7d490cf8a6421d5c5c38a9e6da",
+          "document": "apple10k2024.pdf",
+          "page": 27,
+          "rerank_score": 7.852443695068359
+        },
+        {
+          "chunk_id": "de3c114b30d92d9bfa18d1464b88e265a0589e7627cb67ff72da4ffb0991f9ff",
+          "document": "apple10k2025.pdf",
+          "page": 27,
+          "rerank_score": 6.760873794555664
+        },
+        {
+          "chunk_id": "de51c87bb3182c1114e3ad008eb64a014606bb2d440bcbd983a07565b5951318",
+          "document": "apple10k2025.pdf",
+          "page": 27,
+          "rerank_score": 5.787569522857666
+        },
+        {
+          "chunk_id": "2a24d7622c7d2392a5e09b7d0e412d27dd337337482587516ba47fa122796ad1",
+          "document": "apple10k2023.pdf",
+          "page": 26,
+          "rerank_score": 5.647003173828125
+        },
+        {
+          "chunk_id": "aae8d54e237a57c73a00dd191d434f4f973f7933f60602a345ee5cbbc7cbc71b",
+          "document": "apple10k2025.pdf",
+          "page": 26,
+          "rerank_score": 4.913863658905029
+        }
+      ],
+      "retrieval_latency_ms": 213.78,
+      "generation_latency_ms": 1419.99,
+      "evaluation_status": "scored",
+      "evaluation_latency_ms": 33362.7
+    },
+    {
+      "id": "operating_expenses_2025",
+      "question": "What were Apple's total operating expenses in fiscal 2025?",
+      "status": "error",
+      "faithfulness": null,
+      "error": "Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01m5fter17ef1te8mqngt52fzd` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5775, Requested 2515. Please try again in 2.175s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+      "evaluation_status": "skipped",
+      "evaluation_reason": "FinQuery did not return an accepted answer"
+    }
+  ]
+}
