@@ -15,6 +15,7 @@ from app.retrieval.hybrid_search import (
 )
 from app.retrieval.scoped_search import search_filing_year
 from app.agents.planner import extract_years
+from app.database.vector_store import get_client
 
 
 ROOT = Path(__file__).resolve().parent
@@ -257,5 +258,10 @@ def run_benchmark():
     print("\nResults saved to evaluation/results/")
 
 
+
 if __name__ == "__main__":
-    run_benchmark()
+    try:
+        run_benchmark()
+    finally:
+        get_client().close()
+

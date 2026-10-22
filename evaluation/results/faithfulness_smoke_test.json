@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-10-22T01:22:27.722426+00:00",
+  "judge_model": "openai/gpt-oss-20b",
+  "results": [
+    {
+      "id": "supported_rd_growth",
+      "expected": "supported",
+      "score": 0.3333,
+      "status": "scored"
+    },
+    {
+      "id": "unsupported_engineers",
+      "expected": "unsupported",
+      "score": 0.0,
+      "status": "scored"
+    }
+  ]
+}

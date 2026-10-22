@@ -10,3 +10,6 @@ openai
 python-dotenv
 langgraph
 requests
+ragas==0.4.3
+langchain-community==0.4.1
+instructor
