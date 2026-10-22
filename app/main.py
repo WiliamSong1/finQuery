@@ -28,6 +28,9 @@ from fastapi import (
 import hashlib
 from pathlib import Path
 from app.agents.graph import run_agent
+from hmac import compare_digest
+from fastapi import Request
+from fastapi.responses import JSONResponse
 logger = logging.getLogger(__name__)
 
 
@@ -51,6 +54,33 @@ app = FastAPI(
     title="FinQuery API",
     lifespan=lifespan
 )
+@app.middleware("http")
+async def require_api_key(request: Request, call_next):
+    if settings.environment != "production":
+        return await call_next(request)
+
+    # Docker health checks must work without credentials.
+    if request.url.path == "/health":
+        return await call_next(request)
+
+    expected_key = settings.finquery_api_key
+
+    # Fail closed if the production secret is missing.
+    if not expected_key:
+        return JSONResponse(
+            status_code=503,
+            content={"detail": "API authentication is not configured"},
+        )
+
+    provided_key = request.headers.get("X-API-Key", "")
+
+    if not compare_digest(provided_key, expected_key):
+        return JSONResponse(
+            status_code=401,
+            content={"detail": "Unauthorized"},
+        )
+
+    return await call_next(request)
 
 
 @app.get("/health")
