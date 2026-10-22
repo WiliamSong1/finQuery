@@ -1,6 +1,6 @@
 
 import re
-
+from functools import lru_cache
 from rank_bm25 import BM25Okapi
 from app.database.vector_store import (
     get_client,
@@ -38,20 +38,83 @@ def get_all_chunks() -> list[dict]:
 
     return chunks
 
+@lru_cache(maxsize=1)
+def get_bm25_index():
+    """
+    Build and cache the BM25 index for the
+    currently stored document collection.
+    """
 
-def bm25_search(query: str, limit: int = 10) -> list[dict]:
     chunks = get_all_chunks()
 
-    if not chunks or not query.strip() or limit <= 0:
-        return []
+    if not chunks:
+        return None, []
 
-    corpus = [tokenize(chunk["text"]) for chunk in chunks]
+    tokenized_corpus = [
+        tokenize(chunk["text"])
+        for chunk in chunks
+    ]
+
+    # Avoid attempting to index empty documents.
+    filtered = [
+        (chunk, tokens)
+        for chunk, tokens in zip(
+            chunks, tokenized_corpus
+        )
+        if tokens
+    ]
+
+    if not filtered:
+        return None, []
+
+    indexed_chunks = [
+        chunk for chunk, _ in filtered
+    ]
+
+    corpus = [
+        tokens for _, tokens in filtered
+    ]
 
     bm25 = BM25Okapi(corpus)
-    scores = bm25.get_scores(tokenize(query))
+
+    print(
+        f"[BM25] Index built with "
+        f"{len(indexed_chunks)} chunks"
+    )
+
+    return bm25, indexed_chunks
+
+
+def invalidate_bm25_index():
+    """
+    Force BM25 to rebuild after document ingestion.
+    """
+    get_bm25_index.cache_clear()
+
+
+
+def bm25_search(
+    query: str,
+    limit: int = 5
+) -> list[dict]:
+
+    if not query.strip() or limit <= 0:
+        return []
+
+    bm25, chunks = get_bm25_index()
+
+    if bm25 is None:
+        return []
+
+    query_tokens = tokenize(query)
+
+    if not query_tokens:
+        return []
+
+    scores = bm25.get_scores(query_tokens)
 
     ranked_indices = sorted(
-        range(len(chunks)),
+        range(len(scores)),
         key=lambda i: float(scores[i]),
         reverse=True
     )
@@ -73,3 +136,4 @@ def bm25_search(query: str, limit: int = 10) -> list[dict]:
             break
 
     return results
+

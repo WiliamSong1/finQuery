@@ -2,6 +2,7 @@ fastapi
 uvicorn[standard]
 python-multipart
 pydantic
+pydantic-settings
 pymupdf
 sentence-transformers
 qdrant-client

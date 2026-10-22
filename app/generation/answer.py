@@ -141,7 +141,9 @@ def generate_answer(
         store=False
     )
 
-    answer = (response.output_text or "").strip()
+    print("Response status:", response.status)
+    print("Incomplete details:", response.incomplete_details)
+    print("Output tokens:", response.usage.output_tokens if response.usage else None)
     print("\n--- GENERATED ANSWER ---")
     print(repr(answer))
     print("------------------------\n")

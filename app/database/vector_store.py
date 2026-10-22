@@ -1,7 +1,7 @@
 
 import uuid
 from functools import lru_cache
-
+from app.core.config import settings
 from qdrant_client import QdrantClient, models
 from app.retrieval.embeddings import embed_texts
 
@@ -10,9 +10,20 @@ COLLECTION_NAME = "financial_documents"
 VECTOR_SIZE = 384
 
 
+
 @lru_cache(maxsize=1)
 def get_client():
-    return QdrantClient(path="./data/qdrant")
+    database_path = settings.qdrant_path.resolve()
+
+    database_path.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    return QdrantClient(
+        path=str(database_path)
+    )
+
 
 
 def ensure_collection():

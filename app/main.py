@@ -1,22 +1,56 @@
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from app.ingestion.parser import parse_pdf
+from app.retrieval.bm25_search import invalidate_bm25_index
+from contextlib import asynccontextmanager
+from app.database.vector_store import get_client
 from app.ingestion.chunker import chunk_pages
 from pydantic import BaseModel
 from app.ingestion.chunker import chunk_pages
+from app.core.config import settings
 from app.database.vector_store import store_chunks
 from app.retrieval.hybrid_search import (
     hybrid_search,
     reranked_hybrid_search
 )
+from openai import RateLimitError, APIConnectionError
 from app.tools.sec_comparison import compare_sec_financials
 from app.generation.answer import generate_answer
 import tempfile
 import os
+import logging
+from fastapi import (
+    FastAPI,
+    UploadFile,
+    File,
+    HTTPException
+)
 import hashlib
 from pathlib import Path
 from app.agents.graph import run_agent
-app = FastAPI(title="Financial RAG API")
+logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info("FinQuery starting")
+
+    yield
+
+    logger.info("FinQuery shutting down")
+
+    get_client.cache_info()
+
+    if get_client.cache_info().currsize > 0:
+        get_client().close()
+        get_client.cache_clear()
+
+    logger.info("Qdrant connection closed")
+
+app = FastAPI(
+    title="FinQuery API",
+    lifespan=lifespan
+)
 
 
 @app.get("/health")
@@ -25,20 +59,27 @@ def health():
 
 
 
+
 @app.post("/documents")
 async def upload_document(file: UploadFile = File(...)):
 
-    if not file.filename or not file.filename.lower().endswith(".pdf"):
+    if (
+        not file.filename
+        or not file.filename.lower().endswith(".pdf")
+    ):
         raise HTTPException(
             status_code=400,
             detail="Only PDF files are supported"
         )
 
+    filename = file.filename.replace("\\", "/").split("/")[-1]
+    max_bytes = settings.max_upload_mb * 1024 * 1024
+
     temp_path = None
+    total_bytes = 0
+    hasher = hashlib.sha256()
 
     try:
-        hasher = hashlib.sha256()
-
         with tempfile.NamedTemporaryFile(
             suffix=".pdf",
             delete=False
@@ -46,41 +87,101 @@ async def upload_document(file: UploadFile = File(...)):
 
             temp_path = temp.name
 
-            while chunk := await file.read(1024 * 1024):
-                hasher.update(chunk)
-                temp.write(chunk)
+            while True:
+                data = await file.read(1024 * 1024)
+
+                if not data:
+                    break
+
+                total_bytes += len(data)
+
+                if total_bytes > max_bytes:
+                    raise HTTPException(
+                        status_code=413,
+                        detail=(
+                            f"Maximum upload size is "
+                            f"{settings.max_upload_mb} MB"
+                        )
+                    )
+
+                # Verify the PDF signature.
+                if total_bytes == len(data):
+                    if not data.startswith(b"%PDF-"):
+                        raise HTTPException(
+                            status_code=400,
+                            detail="Invalid PDF file signature"
+                        )
+
+                hasher.update(data)
+                temp.write(data)
+
+        if total_bytes == 0:
+            raise HTTPException(
+                status_code=400,
+                detail="Uploaded file is empty"
+            )
 
         document_id = hasher.hexdigest()
-        original_filename = Path(file.filename).name
 
-        pages = parse_pdf(temp_path)
+        try:
+            pages = parse_pdf(temp_path)
+        except Exception as exc:
+            logger.warning(
+                "PDF parsing failed for %s",
+                filename,
+                exc_info=True
+            )
+            raise HTTPException(
+                status_code=422,
+                detail="Could not parse PDF"
+            ) from exc
+
+        if not pages:
+            raise HTTPException(
+                status_code=422,
+                detail="PDF contains no extractable text"
+            )
 
         for page in pages:
             page["document_id"] = document_id
-            page["document"] = original_filename
+            page["document"] = filename
 
         chunks = chunk_pages(pages)
 
-        stored_count = store_chunks(chunks)
+        if not chunks:
+            raise HTTPException(
+                status_code=422,
+                detail="No searchable document chunks found"
+            )
 
+        stored_count = store_chunks(chunks)
+        invalidate_bm25_index()
         return {
             "document_id": document_id,
-            "filename": original_filename,
+            "filename": filename,
+            "size_bytes": total_bytes,
             "total_pages_with_text": len(pages),
             "total_chunks": len(chunks),
             "indexed_chunks": stored_count
         }
 
+    except HTTPException:
+        raise
+
     except Exception as exc:
+        logger.exception("Document ingestion failed")
+
         raise HTTPException(
-            status_code=422,
-            detail="Could not process PDF"
+            status_code=500,
+            detail="Document processing failed"
         ) from exc
 
     finally:
+        await file.close()
+
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)
-        await file.close()
+
 
 
 class SearchRequest(BaseModel):
@@ -202,6 +303,34 @@ def ask_question(request: AskRequest):
             "query": request.query,
             **result
         }
+
+    except RateLimitError as exc:
+        logger.warning("LLM provider rate limit reached")
+
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "error": "llm_rate_limited",
+                "message": (
+                    "The language model is temporarily "
+                    "unavailable. Please retry later."
+                )
+            }
+        ) from exc
+
+    except APIConnectionError as exc:
+        logger.error("LLM provider connection failed")
+
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "error": "llm_unavailable",
+                "message": (
+                    "Unable to connect to the "
+                    "language model provider."
+                )
+            }
+        ) from exc
 
     except RuntimeError as exc:
         raise HTTPException(
