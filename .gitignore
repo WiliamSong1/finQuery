@@ -1,6 +1,7 @@
 # Python virtual environments
 .venv/
 venv/
+.venv313/
 env/
 
 # Python cache
@@ -29,4 +30,8 @@ uploads/
 # Testing
 .pytest_cache/
 .coverage
+
+#streamLit
+.streamlit/secrets.toml
+.venv*/
 
