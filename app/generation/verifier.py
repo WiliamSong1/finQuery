@@ -68,6 +68,10 @@ def verify_answer(
                 max_output_tokens=1600,
                 store=False
             )
+            print("\n===== RAW VERIFIER RESPONSE =====", flush=True)
+            print("Status:", response.status, flush=True)
+            print("Output text:", repr(response.output_text), flush=True)
+            print("=================================\n", flush=True)
             break
 
         except RateLimitError:
