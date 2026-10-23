@@ -182,6 +182,9 @@ def generate_answer(
         chunks=chunks,
         client=client
     )
+    print("\n===== VERIFICATION RESULT =====", flush=True)
+    print(repr(verification), flush=True)
+    print("================================\n", flush=True)
     import logging
 
     logger = logging.getLogger(__name__)
