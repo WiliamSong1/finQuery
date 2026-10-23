@@ -65,13 +65,38 @@ def verify_answer(
                     f"PROPOSED ANSWER:\n{answer}\n\n"
                     f"REFERENCE PASSAGES:\n{evidence}"
                 ),
-                max_output_tokens=1600,
+                max_output_tokens=2048,
+                reasoning={"effort": "low"},
                 store=False
             )
             print("\n===== RAW VERIFIER RESPONSE =====", flush=True)
             print("Status:", response.status, flush=True)
             print("Output text:", repr(response.output_text), flush=True)
             print("=================================\n", flush=True)
+            print(
+                "Incomplete details:",
+                response.incomplete_details,
+                flush=True,
+            )
+            print(
+                "Output tokens:",
+                response.usage.output_tokens if response.usage else None,
+                flush=True,
+            )
+            print(
+                "Max output tokens:",
+                response.max_output_tokens,
+                flush=True,
+            )
+            if response.status != "completed" or not response.output_text:
+                return {
+                    "verified": False,
+                    "claims": [],
+                    "reason": (
+                        f"Verifier did not complete: "
+                        f"{response.incomplete_details}"
+                    ),
+                }
             break
 
         except RateLimitError:
