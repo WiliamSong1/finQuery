@@ -140,6 +140,7 @@ def generate_answer(
         max_output_tokens=800,
         store=False
     )
+    answer = response.output_text
 
     print("Response status:", response.status)
     print("Incomplete details:", response.incomplete_details)
