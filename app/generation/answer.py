@@ -182,6 +182,14 @@ def generate_answer(
         chunks=chunks,
         client=client
     )
+    import logging
+
+    logger = logging.getLogger(__name__)
+
+    logger.info(
+        "FinQuery verification result: %s",
+        verification,
+    )
 
     if not verification["verified"]:
         return {
