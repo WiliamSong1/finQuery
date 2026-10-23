@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from app.ingestion.chunker import chunk_pages
 from app.core.config import settings
 from app.database.vector_store import store_chunks
+from fastapi.responses import JSONResponse
 from app.retrieval.hybrid_search import (
     hybrid_search,
     reranked_hybrid_search
@@ -414,3 +415,14 @@ def financial_compare(request: FinancialCompareRequest):
             detail=str(exc)
         ) from exc
 
+@app.exception_handler(RateLimitError)
+async def groq_rate_limit_handler(request, exc):
+    return JSONResponse(
+        status_code=503,
+        content={
+            "detail": (
+                "The AI provider is temporarily rate-limited. "
+                "Please retry shortly."
+            )
+        },
+    )

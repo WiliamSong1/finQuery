@@ -1,7 +1,8 @@
 import json
 import os
 import re
-
+import time
+from openai import RateLimitError
 from openai import OpenAI
 
 
@@ -55,17 +56,26 @@ def verify_answer(
         f"[{i}]\n{chunk['text']}"
         for i, chunk in enumerate(chunks, start=1)
     )
+    for attempt in range(3):
+        try:
+            response = client.responses.create(
+                model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
+                instructions=VERIFIER_PROMPT,
+                input=(
+                    f"PROPOSED ANSWER:\n{answer}\n\n"
+                    f"REFERENCE PASSAGES:\n{evidence}"
+                ),
+                max_output_tokens=1600,
+                store=False
+            )
+            break
 
-    response = client.responses.create(
-        model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
-        instructions=VERIFIER_PROMPT,
-        input=(
-            f"PROPOSED ANSWER:\n{answer}\n\n"
-            f"REFERENCE PASSAGES:\n{evidence}"
-        ),
-        max_output_tokens=1600,
-        store=False
-    )
+        except RateLimitError:
+            if attempt == 2:
+                raise
+
+            time.sleep(10 * (attempt + 1))
+
 
     raw_output = (response.output_text or "").strip()
 
