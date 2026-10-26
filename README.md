@@ -7,6 +7,8 @@ FinQuery is a full-stack financial research application that enables users to up
 
 The application combines hybrid document retrieval, LangGraph-based agent orchestration, Groq-powered answer generation, and claim-level verification. Its FastAPI backend is containerized with Docker and deployed on AWS EC2, while the Streamlit frontend provides a web-based research interface.
 
+![FinQuery Dashboard](assets/finQueryDash.png)
+
 ## Features
 
 - **Multi-Document Analysis:** Upload and analyze multiple financial filings, including annual and quarterly reports.
