@@ -7,9 +7,18 @@ import streamlit as st
 
 
 st.set_page_config(
-    page_title="FinQuery",
+    page_title="FinQuery | Financial Analysis",
     page_icon="📊",
-    layout="wide"
+    layout="wide",
+)
+
+st.markdown("### FINQUERY / FINANCIAL ANALYSIS")
+
+st.title("Explore financial performance")
+
+st.caption(
+    "Compare reported financial results across fiscal years "
+    "using SEC XBRL data."
 )
 
 APPLE_CIK = "0000320193"
@@ -261,7 +270,8 @@ if analyze:
 
 st.divider()
 
+st.divider()
 st.caption(
-    "FinQuery Lite · SEC financial data · "
+    "FinQuery · SEC financial data · "
     "For research and educational use"
 )
